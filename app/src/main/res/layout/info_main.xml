@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="8.6%">
+
+
+        <android.support.percent.PercentFrameLayout
+            android:id="@+id/info_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_widthPercent="13.2%">
+
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ico_back"
+                app:layout_marginLeftPercent="33.3%" />
+
+        </android.support.percent.PercentFrameLayout>
+
+        <TextView
+            android:id="@+id/info_storename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="Contents"
+            android:textSize="9pt"
+            android:textStyle="bold" />
+
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title">
+
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/info_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <android.support.percent.PercentRelativeLayout
+                android:id="@+id/contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/info_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/s_blue" />
+
+
+            </android.support.percent.PercentRelativeLayout>
+
+
+            <TextView
+                android:id="@+id/info_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contents"
+                android:layout_margin="10dp"
+                android:text="컨텐츠정보1"
+                android:textSize="10pt" />
+
+
+            <TextView
+                android:id="@+id/info_content2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/info_content"
+                android:layout_margin="10dp"
+                android:text="컨텐츠정보2"
+                android:textSize="10pt" />
+
+        </android.support.percent.PercentRelativeLayout>
+
+    </ScrollView>
+
+
+</android.support.percent.PercentRelativeLayout>

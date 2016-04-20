@@ -1,16 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="mp3.mp3.MainActivity">
+    android:background="#ffffff">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="8.6%">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="App Name"
+            android:textSize="9pt"
+            android:textStyle="bold"
+            app:layout_widthPercent="24.8%" />
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:layout_marginBottom="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/main_r_group" />
+
+            <include layout="@layout/main_l_group" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <SlidingDrawer
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:layout_marginTop="200dp"
+        android:animateOnClick="true"
+        android:content="@+id/mcontent"
+        android:handle="@+id/mhandle"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/mhandle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#2c3a54">
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/mcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
+
+            <fragment
+                android:id="@+id/map"
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </FrameLayout>
+
+    </SlidingDrawer>
+
+
+</android.support.percent.PercentRelativeLayout>
