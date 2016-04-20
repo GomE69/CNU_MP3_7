@@ -7,9 +7,7 @@ import android.view.View;
 
 import mp3.mp3.R;
 
-/**
- * Created by KimYeongJun on 2015-12-29.
- */
+
 public class InfoActivity extends AppCompatActivity {
 
     PercentFrameLayout back;
