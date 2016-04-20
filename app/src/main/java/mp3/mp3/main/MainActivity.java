@@ -21,7 +21,7 @@ import mp3.mp3.info.InfoActivity;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
 
-    private GoogleMap mMap;
+    private GoogleMap mMap; // GoogleMap 전역변수
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
