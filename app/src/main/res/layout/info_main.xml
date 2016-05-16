@@ -31,15 +31,14 @@
 
         <TextView
             android:id="@+id/info_storename"
-            android:onClick="GOMAP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:onClick="GOMAP"
             android:text="Contents"
             android:textSize="9pt"
             android:textStyle="bold" />
-
 
 
     </android.support.percent.PercentRelativeLayout>
@@ -52,7 +51,8 @@
         <android.support.percent.PercentRelativeLayout
             android:id="@+id/info_body"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
 
             <android.support.percent.PercentRelativeLayout
@@ -64,31 +64,105 @@
                 <ImageView
                     android:id="@+id/info_img"
                     android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:adjustViewBounds="true" />
+
+
+                <TextView
+                    android:id="@+id/info_price1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/s_blue" />
+                    android:layout_above="@+id/info_price2"
+                    android:layout_marginBottom="3dp"
+                    android:text="가격"
+                    android:textColor="#ffffff"
+                    android:textSize="12.3pt"
+                    android:textStyle="bold"
+                    app:layout_marginLeftPercent="4.4%" />
+
+                <TextView
+                    android:id="@+id/won1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/info_price1"
+                    android:layout_toRightOf="@+id/info_price1"
+                    android:text="원"
+                    android:textColor="#ffffff"
+                    android:textSize="7pt" />
+
+
+                <TextView
+                    android:id="@+id/info_price2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/info_img"
+                    android:layout_marginBottom="13dp"
+                    android:text="가격"
+                    android:textColor="#ffffff"
+                    android:textSize="12.3pt"
+                    android:textStyle="bold"
+                    app:layout_marginLeftPercent="4.4%" />
+
+                <TextView
+                    android:id="@+id/won2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/info_price2"
+                    android:layout_toRightOf="@+id/info_price2"
+                    android:text="원"
+                    android:textColor="#ffffff"
+                    android:textSize="7pt" />
+
+
+                <android.support.percent.PercentFrameLayout
+                    android:id="@+id/info_map"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignBottom="@+id/info_price2"
+                    android:layout_alignParentRight="true"
+                    app:layout_marginRightPercent="4.4%">
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ico_guide_road" />
+
+
+                    <TextView
+                        android:id="@+id/info_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:gravity="center"
+                        android:text="거리"
+                        android:textColor="#2c3a54"
+                        android:textSize="11pt"
+                        android:textStyle="bold"
+                        app:layout_marginBottomPercent="25%" />
+
+
+                </android.support.percent.PercentFrameLayout>
 
 
             </android.support.percent.PercentRelativeLayout>
 
 
             <TextView
-                android:id="@+id/info_content"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/contents"
                 android:layout_margin="10dp"
-                android:text="컨텐츠정보1"
                 android:textSize="10pt" />
 
-
             <TextView
-                android:id="@+id/info_content2"
+                android:id="@+id/info_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/info_content"
+                android:layout_below="@+id/name"
                 android:layout_margin="10dp"
-                android:text="컨텐츠정보2"
                 android:textSize="10pt" />
 
         </android.support.percent.PercentRelativeLayout>

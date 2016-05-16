@@ -33,16 +33,52 @@
 
 
     <GridView
-        android:layout_below="@+id/connect"
         android:id="@+id/contents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/connect"
+        android:layout_marginBottom="40dp"
         android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:horizontalSpacing="3dp"
         android:numColumns="3"
         android:verticalSpacing="1dp" />
 
+
+    <SlidingDrawer
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:animateOnClick="true"
+        android:content="@+id/mcontent"
+        android:handle="@+id/mhandle"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/mhandle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#2c3a54">
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/mcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
+
+            <fragment
+                android:id="@+id/map"
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </FrameLayout>
+
+    </SlidingDrawer>
 
     <!--
 
@@ -83,40 +119,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <SlidingDrawer
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:animateOnClick="true"
-        android:content="@+id/mcontent"
-        android:handle="@+id/mhandle"
-        android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/mhandle"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="#2c3a54">
-
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/mcontent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff">
-
-            <fragment
-                android:id="@+id/map"
-                class="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-        </FrameLayout>
-
-    </SlidingDrawer>
 
 -->
 </android.support.percent.PercentRelativeLayout>
