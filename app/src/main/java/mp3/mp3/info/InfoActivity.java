@@ -1,5 +1,6 @@
 package mp3.mp3.info;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.percent.PercentFrameLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -27,4 +28,8 @@ public class InfoActivity extends AppCompatActivity {
         });
     }
 
+    public void GOMAP(View v){
+        startActivity(new Intent(this, InfoMap.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left2);
+    }
 }

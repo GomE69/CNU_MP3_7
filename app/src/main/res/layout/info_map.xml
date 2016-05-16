@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="match_parent"
+                                               android:background="#ffffff">
+
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="8.6%">
+
+        <android.support.percent.PercentFrameLayout
+            android:id="@+id/info_map_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_widthPercent="13.2%">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ico_back"
+                app:layout_marginLeftPercent="33.3%"/>
+
+        </android.support.percent.PercentFrameLayout>
+
+        <TextView
+            android:id="@+id/info_map_storename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text=""
+            android:textSize="9pt"
+            android:textStyle="bold"/>
+
+    </android.support.percent.PercentRelativeLayout>
+
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        >
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <fragment
+                android:id="@+id/map"
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <SlidingDrawer
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="200dp"
+                android:content="@+id/contents"
+                android:handle="@+id/handle"
+                android:orientation="vertical">
+
+
+                <FrameLayout
+                    android:id="@+id/handle"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#2c3a54">
+
+
+
+                </FrameLayout>
+
+                <ScrollView
+                    android:id="@+id/contents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff">
+
+                    <LinearLayout
+                        android:id="@+id/info_map_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+
+
+                </ScrollView>
+            </SlidingDrawer>
+
+        </FrameLayout>
+
+
+    </android.support.percent.PercentRelativeLayout>
+
+
+
+
+
+</android.support.percent.PercentRelativeLayout>

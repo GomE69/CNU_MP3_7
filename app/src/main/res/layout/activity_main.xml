@@ -5,6 +5,47 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
+
+    <LinearLayout
+        android:id="@+id/connect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/input01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="HTTP URL"
+            android:textSize="18dp"></EditText>
+
+        <Button
+            android:id="@+id/requestBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="요청"
+            android:textSize="20dp"
+            android:textStyle="bold"></Button>
+    </LinearLayout>
+
+
+    <GridView
+        android:layout_below="@+id/connect"
+        android:id="@+id/contents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:background="#ffffff"
+        android:horizontalSpacing="3dp"
+        android:numColumns="3"
+        android:verticalSpacing="1dp" />
+
+
+    <!--
+
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -77,5 +118,5 @@
 
     </SlidingDrawer>
 
-
+-->
 </android.support.percent.PercentRelativeLayout>
