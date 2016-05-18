@@ -36,7 +36,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:onClick="GOMAP"
-            android:text="Contents"
+            android:text="상세정보"
             android:textSize="9pt"
             android:textStyle="bold" />
 
@@ -64,7 +64,7 @@
                 <ImageView
                     android:id="@+id/info_img"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="wrap_content"
                     android:adjustViewBounds="true" />
 
 
@@ -75,7 +75,7 @@
                     android:layout_above="@+id/info_price2"
                     android:layout_marginBottom="3dp"
                     android:text="가격"
-                    android:textColor="#ffffff"
+
                     android:textSize="12.3pt"
                     android:textStyle="bold"
                     app:layout_marginLeftPercent="4.4%" />
@@ -87,7 +87,7 @@
                     android:layout_alignBottom="@+id/info_price1"
                     android:layout_toRightOf="@+id/info_price1"
                     android:text="원"
-                    android:textColor="#ffffff"
+
                     android:textSize="7pt" />
 
 
@@ -98,7 +98,7 @@
                     android:layout_alignBottom="@+id/info_img"
                     android:layout_marginBottom="13dp"
                     android:text="가격"
-                    android:textColor="#ffffff"
+
                     android:textSize="12.3pt"
                     android:textStyle="bold"
                     app:layout_marginLeftPercent="4.4%" />
@@ -110,7 +110,7 @@
                     android:layout_alignBottom="@+id/info_price2"
                     android:layout_toRightOf="@+id/info_price2"
                     android:text="원"
-                    android:textColor="#ffffff"
+
                     android:textSize="7pt" />
 
 
@@ -127,7 +127,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ico_guide_road" />
+                        android:src="@drawable/ico_guide_road2" />
 
 
                     <TextView

@@ -61,6 +61,8 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
         sLatLng = new LatLng(36.3619993, 127.3491949);
         mLatLng = new LatLng(36.363, 127.344);
 
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        map = mapFragment.getMap();
 
         new InfoMapAsync().execute();
 
@@ -150,7 +152,7 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
 
             try {
 
-                url = new URL("http://112.166.55.38:9738/test?test=HiHi");
+                url = new URL("https://apis.skplanetx.com/tmap/routes/pedestrian?version=1&startX=127.344&startY=36.363&endX=127.3491949&endY=36.3619993&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&startName=z&endName=z&appKey=bc59db7a-3522-3a36-8ca7-fe02a7be39e1");
 
                 https = (HttpsURLConnection) url.openConnection();
                 https.setHostnameVerifier(new HostnameVerifier() {

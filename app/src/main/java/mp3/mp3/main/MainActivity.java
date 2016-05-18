@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         requestBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new Acces().execute(input01.getText().toString());
-
+//                startActivity(new Intent(MainActivity.this, InfoMap.class));
             }
         });
 
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             .putExtra("explain", j.getString("explain"))
                             .putExtra("s_idx", j.getString("s_idx"))
                             .putExtra("url", j.getString("url")));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left2);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

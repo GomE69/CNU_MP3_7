@@ -6,6 +6,7 @@ import android.support.percent.PercentFrameLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,7 +16,7 @@ import mp3.mp3.R;
 
 public class InfoActivity extends AppCompatActivity {
 
-    PercentFrameLayout back;
+    PercentFrameLayout back, imgmap;
     TextView price, s_price, distance, name, explain;
     ImageView img;
 
@@ -24,7 +25,10 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_main);
 
+
         img = (ImageView) findViewById(R.id.info_img);
+        img.setLayoutParams(new RelativeLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().widthPixels));
+
         Glide.with(this)
                 .load(getIntent().getStringExtra("url"))
                 .error(R.drawable.s_background)
@@ -32,6 +36,16 @@ public class InfoActivity extends AppCompatActivity {
                 //					.diskCacheStrategy(DiskCacheStrategy.ALL) // 지정안해주면 처음부터 지정한 사이즈로 로드하고, 지정하면 원본사이즈로 로드해서 리사이징함
                 .into(img);
 
+
+        imgmap = (PercentFrameLayout) findViewById(R.id.info_map);
+        imgmap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(InfoActivity.this, InfoMap.class)
+                .putExtra("s_idx",getIntent().getStringExtra("s_idx")));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left2);
+            }
+        });
 
         price = (TextView) findViewById(R.id.info_price1);
         price.setText(getIntent().getStringExtra("price"));
