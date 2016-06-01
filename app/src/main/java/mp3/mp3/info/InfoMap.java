@@ -1,7 +1,9 @@
 package mp3.mp3.info;
 
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,14 +16,20 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.StringTokenizer;
@@ -50,6 +58,9 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
     LatLng sLatLng; // info에서 받아온 가게 위도,경도
     LatLng mLatLng; // mApp에서 내 위치 가져올거
 
+    String s_idx;
+
+    Bitmap b1, b2; // 마커 이미지지
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +68,13 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
         setContentView(R.layout.info_map);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // 화면회전 고정
 
+        s_idx = getIntent().getStringExtra("s_idx");
+        Bitmap bigPictureBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ico_heremap);
+        b1 = Bitmap.createScaledBitmap(bigPictureBitmap, bigPictureBitmap.getWidth() / 3, bigPictureBitmap.getHeight() / 3, false);
+        bigPictureBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ico_etcmap);
+        b2 = Bitmap.createScaledBitmap(bigPictureBitmap, bigPictureBitmap.getWidth() / 3, bigPictureBitmap.getHeight() / 3, false);
 
-        sLatLng = new LatLng(36.3619993, 127.3491949);
-        mLatLng = new LatLng(36.363, 127.344);
+
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         map = mapFragment.getMap();
@@ -83,8 +98,9 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
 
         // mLatLng 내 위치, sLatLng 상점 위치
 
-        map.addMarker(new MarkerOptions().position(sLatLng));   // 상점 마커추가
-
+        // 내 마커, 상점 마커
+        map.addMarker(new MarkerOptions().position(mLatLng).icon(BitmapDescriptorFactory.fromBitmap(b1)));
+        map.addMarker(new MarkerOptions().position(sLatLng).icon(BitmapDescriptorFactory.fromBitmap(b2)));
 
         PolylineOptions po = new PolylineOptions().geodesic(true);
         po.color(Color.rgb(54, 72, 124));
@@ -146,13 +162,48 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
 
         HttpsURLConnection https;
 
+        JSONArray json;
+        String result;
+        SharedPreferences sharedPref = getSharedPreferences("location", MODE_PRIVATE);
+
         @Override
         protected Void doInBackground(String... params) {
 
 
             try {
 
-                url = new URL("https://apis.skplanetx.com/tmap/routes/pedestrian?version=1&startX=127.344&startY=36.363&endX=127.3491949&endY=36.3619993&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&startName=z&endName=z&appKey=bc59db7a-3522-3a36-8ca7-fe02a7be39e1");
+                url = new URL("http://112.166.55.38:9738/search?s_idx=" + s_idx);
+                conn = (HttpURLConnection) url.openConnection();
+                if (conn != null) {
+
+                    conn.setRequestMethod("GET");
+                    conn.setDoInput(true);
+
+
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
+                        BufferedInputStream buff = new BufferedInputStream(conn.getInputStream());
+                        BufferedReader buff2 = new BufferedReader(new InputStreamReader(buff, "UTF-8"));
+
+                        String read;
+                        result = "";
+                        while ((read = buff2.readLine()) != null) {
+                            result += read;
+                        }
+
+                        json = new JSONObject("{\"result\":" + result + "}").getJSONArray("result");
+                        conn.disconnect();
+
+
+                    }
+                }
+
+
+                mLatLng = new LatLng(Double.parseDouble(sharedPref.getString("lat", "")), Double.parseDouble(sharedPref.getString("lng", "")));
+                sLatLng = new LatLng(Double.parseDouble(json.getJSONObject(0).getString("lat")), Double.parseDouble(json.getJSONObject(0).getString("lng")));
+
+
+                url = new URL("https://apis.skplanetx.com/tmap/routes/pedestrian?version=1&startX=" + mLatLng.longitude + "&startY=" + mLatLng.latitude + "&endX=" + sLatLng.longitude + "&endY=" + sLatLng.latitude + "&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&startName=z&endName=z&appKey=bc59db7a-3522-3a36-8ca7-fe02a7be39e1");
 
                 https = (HttpsURLConnection) url.openConnection();
                 https.setHostnameVerifier(new HostnameVerifier() {
@@ -183,6 +234,7 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
                 polyline = new StringBuilder();
                 for (int i = 0; i < pathList.getLength(); i++)
                     polyline.append(pathList.item(i).getFirstChild().getNodeValue());
+
 
             } catch (Exception ex) {
                 Log.e("SampleHTTP", "Exception in processing response.", ex);
