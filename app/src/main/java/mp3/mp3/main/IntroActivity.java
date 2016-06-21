@@ -33,7 +33,7 @@ public class IntroActivity extends AppCompatActivity {
         manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         gpsListener = new GPSListener();
 
-        startLocationService();
+//        startLocationService();
 
     }
 

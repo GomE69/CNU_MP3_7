@@ -1,0 +1,116 @@
+{
+  "project_info": {
+    "project_number": "565420232985",
+    "firebase_url": "https://mp3-07.firebaseio.com",
+    "project_id": "mp3-07",
+    "storage_bucket": "mp3-07.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565420232985:android:3d791e44140e19f8",
+        "android_client_info": {
+          "package_name": "mp3.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565420232985-bha6qu5g6ia57c8jqfq2e72rjo1mati3.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "565420232985-7lno6u1j3dm5fe8fknls5dmop6vqd8s0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL6VziU3KY8Y5WfAB9WOa4j_l6j4FNgIw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565420232985:android:a5355f52602b59c9",
+        "android_client_info": {
+          "package_name": "mp3.myapplication33"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565420232985-bha6qu5g6ia57c8jqfq2e72rjo1mati3.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "565420232985-7lno6u1j3dm5fe8fknls5dmop6vqd8s0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL6VziU3KY8Y5WfAB9WOa4j_l6j4FNgIw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565420232985:android:7b3f3a71d1cdafc6",
+        "android_client_info": {
+          "package_name": "mp3.mp3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565420232985-bha6qu5g6ia57c8jqfq2e72rjo1mati3.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "565420232985-7lno6u1j3dm5fe8fknls5dmop6vqd8s0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL6VziU3KY8Y5WfAB9WOa4j_l6j4FNgIw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
