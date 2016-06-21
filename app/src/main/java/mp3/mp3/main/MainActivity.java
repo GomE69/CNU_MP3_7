@@ -46,6 +46,7 @@ import java.net.URL;
 
 import mp3.mp3.R;
 import mp3.mp3.info.InfoActivity;
+import mp3.mp3.info.InfoMap;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -77,7 +78,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         map = mapFragment.getMap();
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                try {
+                    JSONObject j = null;
+                    for (int i = 0; i < s_jon.length(); i++)
+                        if (marker.getTitle().equals(s_jon.getJSONObject(i).getString("name"))) {
+                            j = s_jon.getJSONObject(i);
+                            break;
+                        }
+                    startActivity(new Intent(MainActivity.this, InfoMap.class)
+                            .putExtra("sname", j.getString("name"))
+                            .putExtra("s_idx", j.getString("s_idx")));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left2);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
+        });
 
         Bitmap bigPictureBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ico_heremap);
         b1 = Bitmap.createScaledBitmap(bigPictureBitmap, bigPictureBitmap.getWidth() / 3, bigPictureBitmap.getHeight() / 3, false);

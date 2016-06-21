@@ -112,7 +112,6 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
                             .putExtra("s_price", j.getString("s_price"))
                             .putExtra("explain", j.getString("explain"))
                             .putExtra("s_idx", j.getString("s_idx"))
-                            .putExtra("distance", getIntent().getStringExtra("distance"))
                             .putExtra("url", j.getString("url")));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left2);
                 } catch (JSONException e) {
