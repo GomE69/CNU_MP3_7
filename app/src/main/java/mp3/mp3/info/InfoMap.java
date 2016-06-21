@@ -1,5 +1,7 @@
 package mp3.mp3.info;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -7,11 +9,19 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.percent.PercentFrameLayout;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,6 +33,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -47,9 +58,13 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
 
     StringBuilder polyline;
 
+    ImageAdapter myImageAdapter;
+    GridView gridview;
+    JSONArray p_json;
 
     private GoogleMap map;
 
+    PercentFrameLayout back;
 
     NodeList pathList; // xml 파싱 저장할 노드리스트
 
@@ -61,6 +76,8 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
     String s_idx;
 
     Bitmap b1, b2; // 마커 이미지지
+
+    TextView sname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +91,51 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
         bigPictureBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ico_etcmap);
         b2 = Bitmap.createScaledBitmap(bigPictureBitmap, bigPictureBitmap.getWidth() / 3, bigPictureBitmap.getHeight() / 3, false);
 
-
+        sname = (TextView) findViewById(R.id.info_map_storename);
+        sname.setText(getIntent().getStringExtra("sname"));
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         map = mapFragment.getMap();
+
+
+        gridview = (GridView) findViewById(R.id.map_contents);
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    JSONObject j = p_json.getJSONObject(position);
+
+                    startActivity(new Intent(InfoMap.this, InfoActivity2.class)
+                            .putExtra("name", j.getString("name"))
+                            .putExtra("sname", getIntent().getStringExtra("sname"))
+                            .putExtra("price", j.getString("price"))
+                            .putExtra("s_price", j.getString("s_price"))
+                            .putExtra("explain", j.getString("explain"))
+                            .putExtra("s_idx", j.getString("s_idx"))
+                            .putExtra("distance", getIntent().getStringExtra("distance"))
+                            .putExtra("url", j.getString("url")));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left2);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+
+        myImageAdapter = new ImageAdapter(this);
+
+
+        back = (PercentFrameLayout) findViewById(R.id.info_map_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.slide_in_left2, R.anim.slide_out_right);
+            }
+        });
+
 
         new InfoMapAsync().execute();
 
@@ -172,6 +230,34 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
 
             try {
 
+
+                url = new URL("http://112.166.55.35:9738/list?s_idx=" + s_idx);
+                conn = (HttpURLConnection) url.openConnection();
+                if (conn != null) {
+
+                    conn.setRequestMethod("GET");
+                    conn.setDoInput(true);
+
+
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
+                        BufferedInputStream buff = new BufferedInputStream(conn.getInputStream());
+                        BufferedReader buff2 = new BufferedReader(new InputStreamReader(buff, "UTF-8"));
+
+                        String read;
+                        result = "";
+                        while ((read = buff2.readLine()) != null) {
+                            result += read;
+                        }
+
+                        p_json = new JSONObject("{\"result\":" + result + "}").getJSONArray("result");
+                        conn.disconnect();
+
+                    }
+                }
+
+
+
                 url = new URL("http://112.166.55.35:9738/search?s_idx=" + s_idx);
                 conn = (HttpURLConnection) url.openConnection();
                 if (conn != null) {
@@ -249,9 +335,67 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             mapFragment.getMapAsync(InfoMap.this);
-
+            gridview.setAdapter(myImageAdapter);
         }
     }
 
+
+    public class ImageAdapter extends BaseAdapter {
+
+        private Context mContext;
+
+        public ImageAdapter(Context c) {
+            mContext = c;
+        }
+
+        public int getCount() {
+            return p_json.length();
+        }
+
+        public Object getItem(int position) {
+
+            return position;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            ImageView imageView = null;
+
+
+            if (convertView == null)
+                imageView = new ImageView(mContext.getApplicationContext());
+            else
+                imageView = (ImageView) convertView;
+
+
+//			imageView.setImageURI(Uri.withAppendedPath(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, String.valueOf(id)));
+//			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setLayoutParams(new GridView.LayoutParams(getResources().getDisplayMetrics().widthPixels / 3, getResources().getDisplayMetrics().widthPixels / 3));
+
+            try {
+                Glide.with(mContext)
+                        .load(p_json.getJSONObject(position).getString("url"))
+                        .error(R.drawable.s_background)
+                        .centerCrop()
+                        //					.diskCacheStrategy(DiskCacheStrategy.ALL) // 지정안해주면 처음부터 지정한 사이즈로 로드하고, 지정하면 원본사이즈로 로드해서 리사이징함
+                        .into(imageView);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return imageView;
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+            finish();
+            overridePendingTransition(R.anim.slide_in_left2, R.anim.slide_out_right);
+    }
 
 }

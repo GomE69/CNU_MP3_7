@@ -1,6 +1,5 @@
 package mp3.mp3.info;
 
-import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.percent.PercentFrameLayout;
@@ -15,16 +14,16 @@ import com.bumptech.glide.Glide;
 import mp3.mp3.R;
 
 
-public class InfoActivity extends AppCompatActivity {
+public class InfoActivity2 extends AppCompatActivity {
 
-    PercentFrameLayout back, imgmap;
-    TextView price, s_price, distance, name, sname,explain;
+    PercentFrameLayout back;
+    TextView price, s_price, name, sname, explain;
     ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.info_main);
+        setContentView(R.layout.info_main2);
 
 
         img = (ImageView) findViewById(R.id.info_img);
@@ -38,25 +37,11 @@ public class InfoActivity extends AppCompatActivity {
                 .into(img);
 
 
-        imgmap = (PercentFrameLayout) findViewById(R.id.info_map);
-        imgmap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(InfoActivity.this, InfoMap.class)
-                .putExtra("s_idx",getIntent().getStringExtra("s_idx"))
-                .putExtra("sname",getIntent().getStringExtra("sname"))
-                .putExtra("distance", getIntent().getStringExtra("distance")));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left2);
-            }
-        });
-
         price = (TextView) findViewById(R.id.info_price1);
         price.setText(getIntent().getStringExtra("price"));
         price.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         s_price = (TextView) findViewById(R.id.info_price2);
         s_price.setText(getIntent().getStringExtra("s_price"));
-        distance = (TextView) findViewById(R.id.info_distance);
-        distance.setText(getIntent().getStringExtra("distance"));
         name = (TextView) findViewById(R.id.name);
         name.setText(getIntent().getStringExtra("name"));
         sname = (TextView) findViewById(R.id.sname);
@@ -80,6 +65,5 @@ public class InfoActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.slide_in_left2, R.anim.slide_out_right);
     }
-
 
 }
