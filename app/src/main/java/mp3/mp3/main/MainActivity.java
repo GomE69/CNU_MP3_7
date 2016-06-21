@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     Bitmap b1, b2; // 마커 이미지지
 
+    LatLng mLatLng; // 내위치 저장
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,9 +90,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         input01 = (EditText) findViewById(R.id.input01);
-        input01.setText("http://112.166.55.38:9738/p_init");
+        input01.setText("http://112.166.55.35:9738/p_init");
 
         Button requestBtn = (Button) findViewById(R.id.requestBtn);
+        assert requestBtn != null;
         requestBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new Acces().execute(input01.getText().toString());
@@ -105,13 +108,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     JSONObject j = arr_json.getJSONObject(position);
+                    JSONObject s = null;
+                    float[] result = new float[1];
+                    for (int i = 0; i < s_jon.length(); i++) {
+                        if (j.getString("s_idx").equals(s_jon.getJSONObject(i).getString("s_idx"))) {
+                            s = s_jon.getJSONObject(i);
+                            break;
+                        }
+                    }
+                    Location.distanceBetween(mLatLng.latitude, mLatLng.longitude, s.getDouble("lat"), s.getDouble("lng"), result);
 
                     startActivity(new Intent(MainActivity.this, InfoActivity.class)
                             .putExtra("name", j.getString("name"))
+                            .putExtra("sname", s.getString("name"))
                             .putExtra("price", j.getString("price"))
                             .putExtra("s_price", j.getString("s_price"))
                             .putExtra("explain", j.getString("explain"))
                             .putExtra("s_idx", j.getString("s_idx"))
+                            .putExtra("distance", (int) result[0] + "")
                             .putExtra("url", j.getString("url")));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left2);
                 } catch (JSONException e) {
@@ -122,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         myImageAdapter = new ImageAdapter(this);
+
+        mapFragment.getMapAsync(MainActivity.this);
 
         startLocationService();
 
@@ -142,8 +158,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
         googleMap.getUiSettings().setAllGesturesEnabled(false); // 모든옵션 x
+//		googleMap.getUiSettings().setMyLocationButtonEnabled(false); // 내위치 버튼 안보이게
+//		googleMap.getUiSettings().setCompassEnabled(false); // 나침반 안보이기
+//		googleMap.getUiSettings().setRotateGesturesEnabled(false); // 화면 회전 안되게
         googleMap.getUiSettings().setScrollGesturesEnabled(true); // 스크롤
         googleMap.getUiSettings().setZoomGesturesEnabled(true); // 줌
+
     }
 
     public void GOINFO(View view) {
@@ -218,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         protected Void doInBackground(String... params) {
             try {
-                URL url = new URL(params[0]);
+                URL url = new URL("http://112.166.55.35:9738/p_init?lat=" + params[0] + "&lng=" + params[1]);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 if (conn != null) {
 
@@ -245,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
 
-                url = new URL("http://112.166.55.38:9738/s_init");
+                url = new URL("http://112.166.55.35:9738/s_init?lat=" + params[0] + "&lng=" + params[1]);
                 conn = (HttpURLConnection) url.openConnection();
                 if (conn != null) {
 
@@ -350,6 +370,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
 
+            mLatLng = new LatLng(latitude, longitude);
 
             editor.putString("lat", latitude.toString());
             editor.putString("lng", longitude.toString());
@@ -370,8 +391,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
+            new Acces().execute(latitude.toString(), longitude.toString());
             manager.removeUpdates(gpsListener);
-
         }
 
         public void onProviderDisabled(String provider) {

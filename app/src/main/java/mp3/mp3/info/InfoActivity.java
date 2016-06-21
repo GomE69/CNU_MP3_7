@@ -1,6 +1,7 @@
 package mp3.mp3.info;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.percent.PercentFrameLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import mp3.mp3.R;
 public class InfoActivity extends AppCompatActivity {
 
     PercentFrameLayout back, imgmap;
-    TextView price, s_price, distance, name, explain;
+    TextView price, s_price, distance, name, sname,explain;
     ImageView img;
 
     @Override
@@ -49,12 +50,15 @@ public class InfoActivity extends AppCompatActivity {
 
         price = (TextView) findViewById(R.id.info_price1);
         price.setText(getIntent().getStringExtra("price"));
+        price.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         s_price = (TextView) findViewById(R.id.info_price2);
         s_price.setText(getIntent().getStringExtra("s_price"));
         distance = (TextView) findViewById(R.id.info_distance);
-        distance.setText(getIntent().getStringExtra("거리거리"));
+        distance.setText(getIntent().getStringExtra("distance"));
         name = (TextView) findViewById(R.id.name);
         name.setText(getIntent().getStringExtra("name"));
+        sname = (TextView) findViewById(R.id.sname);
+        sname.setText(getIntent().getStringExtra("sname"));
         explain = (TextView) findViewById(R.id.info_content);
         explain.setText(getIntent().getStringExtra("explain"));
 

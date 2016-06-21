@@ -88,12 +88,12 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
 
 
+        googleMap.getUiSettings().setAllGesturesEnabled(false); // 모든옵션 x
 //		googleMap.getUiSettings().setMyLocationButtonEnabled(false); // 내위치 버튼 안보이게
 //		googleMap.getUiSettings().setCompassEnabled(false); // 나침반 안보이기
 //		googleMap.getUiSettings().setRotateGesturesEnabled(false); // 화면 회전 안되게
-//        googleMap.getUiSettings().setAllGesturesEnabled(false); // 모든옵션 x
-//        googleMap.getUiSettings().setScrollGesturesEnabled(true); // 스크롤
-//        googleMap.getUiSettings().setZoomGesturesEnabled(true); // 줌
+        googleMap.getUiSettings().setScrollGesturesEnabled(true); // 스크롤
+        googleMap.getUiSettings().setZoomGesturesEnabled(true); // 줌
 
 
         // mLatLng 내 위치, sLatLng 상점 위치
@@ -172,7 +172,7 @@ public class InfoMap extends FragmentActivity implements OnMapReadyCallback {
 
             try {
 
-                url = new URL("http://112.166.55.38:9738/search?s_idx=" + s_idx);
+                url = new URL("http://112.166.55.35:9738/search?s_idx=" + s_idx);
                 conn = (HttpURLConnection) url.openConnection();
                 if (conn != null) {
 
