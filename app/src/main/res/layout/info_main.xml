@@ -73,8 +73,8 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/info_price2"
                     android:layout_marginBottom="3dp"
+                    android:background="#AAFFFFFF"
                     android:text="가격"
-
                     android:textSize="12.3pt"
                     android:textStyle="bold"
                     app:layout_marginLeftPercent="4.4%" />
@@ -85,6 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/info_price1"
                     android:layout_toRightOf="@+id/info_price1"
+                    android:background="#AAFFFFFF"
                     android:text="원"
 
                     android:textSize="7pt" />
@@ -96,8 +97,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/info_img"
                     android:layout_marginBottom="13dp"
+                    android:background="#AAFFFFFF"
                     android:text="가격"
-
                     android:textSize="12.3pt"
                     android:textStyle="bold"
                     app:layout_marginLeftPercent="4.4%" />
@@ -108,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/info_price2"
                     android:layout_toRightOf="@+id/info_price2"
+                    android:background="#AAFFFFFF"
                     android:text="원"
 
                     android:textSize="7pt" />
