@@ -8,8 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -19,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -58,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     JSONArray arr_json, s_jon;
     int json_size;
-
-    LocationManager manager;
-    GPSListener gpsListener;
 
     // 내 위치 마커
     Marker mMarker = null;
@@ -109,23 +103,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         b2 = Bitmap.createScaledBitmap(bigPictureBitmap, bigPictureBitmap.getWidth() / 3, bigPictureBitmap.getHeight() / 3, false);
 
 
-        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        gpsListener = new GPSListener();
-
-
-        input01 = (EditText) findViewById(R.id.input01);
-        input01.setText("http://112.166.55.35:9738/p_init");
-
-        Button requestBtn = (Button) findViewById(R.id.requestBtn);
-        assert requestBtn != null;
-        requestBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                new Acces().execute(input01.getText().toString());
-//                startActivity(new Intent(MainActivity.this, InfoMap.class));
-            }
-        });
-
-
         gridview = (GridView) findViewById(R.id.contents);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -159,10 +136,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+//        gridview.setOnItemLongClickListener();
+
         myImageAdapter = new ImageAdapter(this);
 
         mapFragment.getMapAsync(MainActivity.this);
-        new Acces().execute(mLatLng.latitude+"", mLatLng.longitude+"");
+        new Acces().execute(mLatLng.latitude + "", mLatLng.longitude + "");
 //        startLocationService();
 
     }
@@ -188,6 +167,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //		googleMap.getUiSettings().setRotateGesturesEnabled(false); // 화면 회전 안되게
         googleMap.getUiSettings().setScrollGesturesEnabled(true); // 스크롤
         googleMap.getUiSettings().setZoomGesturesEnabled(true); // 줌
+
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 16));
 
     }
 
@@ -338,6 +319,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //            }
 //            txtMsg.setText(result);
             gridview.setAdapter(myImageAdapter);
+            map.addMarker(new MarkerOptions()
+                    .position(mLatLng)
+                    .icon(BitmapDescriptorFactory.fromBitmap(b1)));
             for (int i = 0; i < s_jon.length(); i++) {
                 try {
                     map.addMarker(new MarkerOptions()
@@ -354,83 +338,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    /**
-     * 위치 정보 확인을 위해 정의한 메소드
-     */
-    private void startLocationService() {
-
-        long minTime = 5000;
-        float minDistance = 0;
-
-        // GPS를 이용한 위치 요청
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, gpsListener);
-
-        // 네트워크를 이용한 위치 요청
-        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, gpsListener);
-
-
-    }
-
-    /**
-     * 리스너 클래스 정의
-     */
-    private class GPSListener implements LocationListener {
-        /**
-         * 위치 정보가 확인될 때 자동 호출되는 메소드
-         */
-        public void onLocationChanged(Location location) {
-            SharedPreferences sp = getSharedPreferences("location", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp.edit();
-
-            Double latitude = location.getLatitude();
-            Double longitude = location.getLongitude();
-
-            mLatLng = new LatLng(latitude, longitude);
-
-            editor.putString("lat", latitude.toString());
-            editor.putString("lng", longitude.toString());
-            editor.commit();
-
-            Log.i("GPS수신 : ", "lat : " + latitude + ", lng : " + longitude);
-
-            // 마커 추가, 카메라 이동
-            mMarker = map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).icon(BitmapDescriptorFactory.fromBitmap(b1)));
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
-            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            new Acces().execute(latitude.toString(), longitude.toString());
-            manager.removeUpdates(gpsListener);
-        }
-
-        public void onProviderDisabled(String provider) {
-        }
-
-        public void onProviderEnabled(String provider) {
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-
-    }
 
 }

@@ -38,7 +38,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "Notification Message Title: " + remoteMessage.getNotification().getTitle());
         Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
 
-        sendNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+        sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
 
     }
     // [END receive_message]
@@ -54,9 +54,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.s_red)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setAutoCancel(true)

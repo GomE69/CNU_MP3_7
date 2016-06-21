@@ -33,7 +33,7 @@ public class IntroActivity extends AppCompatActivity {
         manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         gpsListener = new GPSListener();
 
-//        startLocationService();
+        startLocationService();
 
     }
 
@@ -95,8 +95,9 @@ public class IntroActivity extends AppCompatActivity {
                 return;
             }
             manager.removeUpdates(gpsListener);
-            finish();
             startActivity(new Intent(IntroActivity.this, MainActivity.class));
+            finish();
+            overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
         }
 
         public void onProviderDisabled(String provider) {

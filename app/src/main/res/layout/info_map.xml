@@ -60,7 +60,7 @@
             <SlidingDrawer
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
+                android:layout_marginTop="260dp"
                 android:content="@+id/map_contents"
                 android:handle="@+id/map_handle"
                 android:orientation="vertical">
@@ -72,6 +72,11 @@
                     android:layout_height="40dp"
                     android:background="#2c3a54">
 
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="2dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/s_bar"/>
 
                 </FrameLayout>
 

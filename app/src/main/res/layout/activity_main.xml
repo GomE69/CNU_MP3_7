@@ -6,40 +6,34 @@
     android:background="#ffffff">
 
 
-    <LinearLayout
-        android:id="@+id/connect"
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        app:layout_heightPercent="8.6%">
 
-        <EditText
-            android:id="@+id/input01"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="HTTP URL"
-            android:focusable="false"
-            android:textSize="18dp"></EditText>
 
-        <Button
-            android:id="@+id/requestBtn"
+
+        <TextView
+            android:id="@+id/info_storename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="요청"
-            android:textSize="20dp"
-            android:textStyle="bold"></Button>
-    </LinearLayout>
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="Ang Petit"
+            android:textSize="9pt"
+            android:textStyle="bold" />
+
+
+    </android.support.percent.PercentRelativeLayout>
 
 
     <GridView
         android:id="@+id/contents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/connect"
+        android:layout_below="@+id/title"
         android:layout_marginBottom="40dp"
-        android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:horizontalSpacing="3dp"
         android:numColumns="3"
@@ -61,6 +55,12 @@
             android:layout_height="40dp"
             android:background="#2c3a54">
 
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:src="@drawable/s_bar"/>
 
         </FrameLayout>
 
